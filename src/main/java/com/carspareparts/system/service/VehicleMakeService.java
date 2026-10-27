@@ -18,7 +18,9 @@ public class VehicleMakeService {
     public List<VehicleMake> getAll() { return vehicleMakeRepository.findAll(); }
 
     public Object getById(UUID id) {
-        return vehicleMakeRepository.findById(id).orElse("The vehicle make with that id does not exist");
+        return vehicleMakeRepository.findById(id)
+                .map(vehicleMake -> (Object) vehicleMake)
+                .orElse("The vehicle make with that id does not exist");
     }
 
     public String update(UUID id, VehicleMake newData) {

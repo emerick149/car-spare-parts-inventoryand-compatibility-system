@@ -18,7 +18,9 @@ public class StoreSectionService {
     public List<StoreSection> getAll() { return storeSectionRepository.findAll(); }
 
     public Object getById(UUID id) {
-        return storeSectionRepository.findById(id).orElse("The store section with that id does not exist");
+        return storeSectionRepository.findById(id)
+                .map(storeSection -> (Object) storeSection)
+                .orElse("The store section with that id does not exist");
     }
 
     public String update(UUID id, StoreSection newData) {

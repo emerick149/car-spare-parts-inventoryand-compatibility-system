@@ -1,16 +1,12 @@
 package com.carspareparts.system.controller;
 
-public class CustomerController {
-}
-package com.carspareparts.system.controller;
-
 import com.carspareparts.system.domain.Customer;
 import com.carspareparts.system.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-        import java.util.UUID;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/customers")

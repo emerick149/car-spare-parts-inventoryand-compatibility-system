@@ -18,7 +18,9 @@ public class CustomerService {
     public List<Customer> getAll() { return customerRepository.findAll(); }
 
     public Object getById(UUID id) {
-        return customerRepository.findById(id).orElse("The customer with that id does not exist");
+        return customerRepository.findById(id)
+                .map(customer -> (Object) customer)
+                .orElse("The customer with that id does not exist");
     }
 
     public String update(UUID id, Customer newData) {

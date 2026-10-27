@@ -18,7 +18,9 @@ public class StorekeeperService {
     public List<Storekeeper> getAll() { return storekeeperRepository.findAll(); }
 
     public Object getById(UUID id) {
-        return storekeeperRepository.findById(id).orElse("The storekeeper with that id does not exist");
+        return storekeeperRepository.findById(id)
+                .map(storekeeper -> (Object) storekeeper)
+                .orElse("The storekeeper with that id does not exist");
     }
 
     public String update(UUID id, Storekeeper newData) {

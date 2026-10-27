@@ -18,7 +18,9 @@ public class PartOrderService {
     public List<PartOrder> getAll() { return partOrderRepository.findAll(); }
 
     public Object getById(UUID id) {
-        return partOrderRepository.findById(id).orElse("The part order with that id does not exist");
+        return partOrderRepository.findById(id)
+                .map(partOrder -> (Object) partOrder)
+                .orElse("The part order with that id does not exist");
     }
 
     public String update(UUID id, PartOrder newData) {
