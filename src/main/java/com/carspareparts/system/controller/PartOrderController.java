@@ -1,11 +1,13 @@
 package com.carspareparts.system.controller;
 
 import com.carspareparts.system.domain.PartOrder;
+import com.carspareparts.system.domain.PartOrderStatus;
 import com.carspareparts.system.service.PartOrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @RestController
@@ -19,6 +21,18 @@ public class PartOrderController {
     }
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
+
+    @GetMapping("/by-status")
+    public ResponseEntity<?> getByStatus(@RequestParam PartOrderStatus status) {
+        return new ResponseEntity<>(service.getByStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping("/between")
+    public ResponseEntity<?> getByDateRange(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(service.getByDateRange(startDate, endDate), HttpStatus.OK);
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {

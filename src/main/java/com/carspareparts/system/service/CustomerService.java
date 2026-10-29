@@ -34,6 +34,10 @@ public class CustomerService {
         }).orElse("The customer with that id does not exist");
     }
 
+    public List<Customer> getByLastName(String lastName) {
+        return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
     public String delete(UUID id) {
         if (!customerRepository.existsById(id)) return "The customer with that id does not exist";
         customerRepository.deleteById(id);

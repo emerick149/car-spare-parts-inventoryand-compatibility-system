@@ -20,6 +20,11 @@ public class CustomerController {
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
 
+    @GetMapping("/by-last-name")
+    public ResponseEntity<?> getByLastName(@RequestParam String lastName) {
+        return new ResponseEntity<>(service.getByLastName(lastName), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);

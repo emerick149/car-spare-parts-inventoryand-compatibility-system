@@ -1,9 +1,11 @@
 package com.carspareparts.system.service;
 
 import com.carspareparts.system.domain.PartOrder;
+import com.carspareparts.system.domain.PartOrderStatus;
 import com.carspareparts.system.repository.PartOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -34,6 +36,14 @@ public class PartOrderService {
             partOrderRepository.save(existing);
             return "Part order updated successfully";
         }).orElse("The part order with that id does not exist");
+    }
+
+    public List<PartOrder> getByStatus(PartOrderStatus status) {
+        return partOrderRepository.findByStatusOrderByOrderDateAsc(status);
+    }
+
+    public List<PartOrder> getByDateRange(LocalDate start, LocalDate end) {
+        return partOrderRepository.findByOrderDateBetweenOrderByOrderDateAsc(start, end);
     }
 
     public String delete(UUID id) {
