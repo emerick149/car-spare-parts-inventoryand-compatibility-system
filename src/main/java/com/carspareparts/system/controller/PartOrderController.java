@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
+import java.util.Map;
 import java.util.UUID;
 
 @RestController
@@ -15,10 +16,17 @@ import java.util.UUID;
 public class PartOrderController {
     @Autowired private PartOrderService service;
 
+    // D1: safe save — returns 201, 400, or 409 based on business rules
     @PostMapping("/save")
     public ResponseEntity<?> save(@RequestBody PartOrder entity) {
-        return new ResponseEntity<>(service.save(entity), HttpStatus.CREATED);
+        Object result = service.save(entity);
+        if (result instanceof Map.Entry<?, ?> entry) {
+            int status = (int) entry.getKey();
+            return new ResponseEntity<>(entry.getValue(), HttpStatus.valueOf(status));
+        }
+        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
+
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
 
@@ -38,6 +46,17 @@ public class PartOrderController {
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);
         return res instanceof String ? new ResponseEntity<>(res, HttpStatus.NOT_FOUND) : new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    // D2: status flow — only allowed transitions are accepted
+    @PatchMapping("/{id}/status")
+    public ResponseEntity<?> updateStatus(@PathVariable UUID id, @RequestParam PartOrderStatus status) {
+        Object result = service.updateStatus(id, status);
+        if (result instanceof Map.Entry<?, ?> entry) {
+            int code = (int) entry.getKey();
+            return new ResponseEntity<>(entry.getValue(), HttpStatus.valueOf(code));
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
     @PutMapping("/update/{id}")
