@@ -20,6 +20,11 @@ public class StoreSectionController {
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
 
+    @GetMapping("/free")
+    public ResponseEntity<?> getFreeSections() {
+        return new ResponseEntity<>(service.getFreeSections(), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);

@@ -35,6 +35,10 @@ public class StorekeeperService {
         }).orElse("The storekeeper with that id does not exist");
     }
 
+    public List<Storekeeper> getByVehicleMake(String name) {
+        return storekeeperRepository.findByVehicleMakeName(name);
+    }
+
     public String delete(UUID id) {
         if (!storekeeperRepository.existsById(id)) return "The storekeeper with that id does not exist";
         storekeeperRepository.deleteById(id);

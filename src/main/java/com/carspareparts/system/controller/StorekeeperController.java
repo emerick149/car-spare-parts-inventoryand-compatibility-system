@@ -20,6 +20,11 @@ public class StorekeeperController {
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
 
+    @GetMapping("/by-vehicle-make")
+    public ResponseEntity<?> getByVehicleMake(@RequestParam String name) {
+        return new ResponseEntity<>(service.getByVehicleMake(name), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);

@@ -32,6 +32,10 @@ public class StoreSectionService {
         }).orElse("The store section with that id does not exist");
     }
 
+    public List<StoreSection> getFreeSections() {
+        return storeSectionRepository.findFreeSections();
+    }
+
     public String delete(UUID id) {
         if (!storeSectionRepository.existsById(id)) return "The store section with that id does not exist";
         storeSectionRepository.deleteById(id);

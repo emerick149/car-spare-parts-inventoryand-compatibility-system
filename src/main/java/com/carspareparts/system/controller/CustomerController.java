@@ -25,6 +25,14 @@ public class CustomerController {
         return new ResponseEntity<>(service.getByLastName(lastName), HttpStatus.OK);
     }
 
+    @GetMapping("/of-storekeeper/{storekeeperID}")
+    public ResponseEntity<?> getCustomersOfStorekeeper(@PathVariable UUID storekeeperID) {
+        Object res = service.getCustomersOfStorekeeper(storekeeperID);
+        return res instanceof String
+                ? new ResponseEntity<>(res, HttpStatus.NOT_FOUND)
+                : new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);

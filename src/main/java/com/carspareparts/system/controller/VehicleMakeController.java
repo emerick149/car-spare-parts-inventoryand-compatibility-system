@@ -20,6 +20,11 @@ public class VehicleMakeController {
     @GetMapping("/all")
     public ResponseEntity<?> getAll() { return new ResponseEntity<>(service.getAll(), HttpStatus.OK); }
 
+    @GetMapping("/unused")
+    public ResponseEntity<?> getUnused() {
+        return new ResponseEntity<>(service.getUnused(), HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);

@@ -31,6 +31,10 @@ public class VehicleMakeService {
         }).orElse("The vehicle make with that id does not exist");
     }
 
+    public List<VehicleMake> getUnused() {
+        return vehicleMakeRepository.findUnused();
+    }
+
     public String delete(UUID id) {
         if (!vehicleMakeRepository.existsById(id)) return "The vehicle make with that id does not exist";
         vehicleMakeRepository.deleteById(id);
