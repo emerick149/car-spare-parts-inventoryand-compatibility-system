@@ -4,6 +4,7 @@ import com.carspareparts.system.domain.PartOrder;
 import com.carspareparts.system.domain.PartOrderStatus;
 import com.carspareparts.system.repository.PartOrderRepository;
 import com.carspareparts.system.repository.StorekeeperRepository;
+import com.carspareparts.system.repository.IssuedPartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
@@ -15,6 +16,7 @@ import java.util.UUID;
 public class PartOrderService {
     @Autowired private PartOrderRepository partOrderRepository;
     @Autowired private StorekeeperRepository storekeeperRepository;
+    @Autowired private IssuedPartRepository issuedPartRepository;
 
     // D1: safe save with business rule validations
     public Object save(PartOrder entity) {
@@ -85,6 +87,7 @@ public class PartOrderService {
 
     public String delete(UUID id) {
         if (!partOrderRepository.existsById(id)) return "The part order with that id does not exist";
+        if (issuedPartRepository.existsByPartOrder_Id(id)) return "That part order has issued parts, delete them first";
         partOrderRepository.deleteById(id);
         return "Part order deleted successfully";
     }

@@ -68,6 +68,8 @@ public class PartOrderController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable UUID id) {
         String msg = service.delete(id);
-        return msg.contains("does not exist") ? new ResponseEntity<>(msg, HttpStatus.NOT_FOUND) : new ResponseEntity<>(msg, HttpStatus.OK);
+        if (msg.contains("does not exist")) return new ResponseEntity<>(msg, HttpStatus.NOT_FOUND);
+        if (msg.contains("delete them first")) return new ResponseEntity<>(msg, HttpStatus.CONFLICT);
+        return new ResponseEntity<>(msg, HttpStatus.OK);
     }
 }
