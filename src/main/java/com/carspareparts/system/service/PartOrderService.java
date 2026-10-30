@@ -85,6 +85,17 @@ public class PartOrderService {
         return partOrderRepository.findByOrderDateBetweenOrderByOrderDateAsc(start, end);
     }
 
+    // F1: part orders count grouped by status — returns [["PLACED", 4], ["FULFILLED", 3], ...]
+    public List<Object[]> getStatsByStatus() {
+        return partOrderRepository.countByStatus();
+    }
+
+    // F2: bulk-void all non-FULFILLED orders of a storekeeper on a given date
+    public String cancelDay(UUID storekeeperID, LocalDate date) {
+        int count = partOrderRepository.cancelDayOrders(storekeeperID, date);
+        return count + " part orders cancelled";
+    }
+
     public String delete(UUID id) {
         if (!partOrderRepository.existsById(id)) return "The part order with that id does not exist";
         if (issuedPartRepository.existsByPartOrder_Id(id)) return "That part order has issued parts, delete them first";

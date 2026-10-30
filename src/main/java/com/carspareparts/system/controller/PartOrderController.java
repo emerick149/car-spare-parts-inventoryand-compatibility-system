@@ -42,6 +42,19 @@ public class PartOrderController {
         return new ResponseEntity<>(service.getByDateRange(startDate, endDate), HttpStatus.OK);
     }
 
+    // F1: part orders count grouped by status
+    @GetMapping("/stats/by-status")
+    public ResponseEntity<?> getStatsByStatus() {
+        return new ResponseEntity<>(service.getStatsByStatus(), HttpStatus.OK);
+    }
+
+    // F2: bulk-void all non-FULFILLED orders for a storekeeper on a given date
+    @PatchMapping("/cancel-day")
+    public ResponseEntity<?> cancelDay(@RequestParam UUID storekeeperID, @RequestParam String date) {
+        String result = service.cancelDay(storekeeperID, LocalDate.parse(date));
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable UUID id) {
         Object res = service.getById(id);
