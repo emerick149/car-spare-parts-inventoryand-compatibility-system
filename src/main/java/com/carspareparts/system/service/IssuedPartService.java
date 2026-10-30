@@ -1,21 +1,23 @@
 package com.carspareparts.system.service;
 
+import java.time.LocalDate;
+import java.util.List;
+import java.util.UUID;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.carspareparts.system.domain.IssuedPart;
 import com.carspareparts.system.domain.PartOrderStatus;
 import com.carspareparts.system.repository.IssuedPartRepository;
 import com.carspareparts.system.repository.PartOrderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.UUID;
 
 @Service
 public class IssuedPartService {
     @Autowired private IssuedPartRepository issuedPartRepository;
     @Autowired private PartOrderRepository partOrderRepository;
 
-    // E1: save — partOrder must exist and be FULFILLED; service sets issuedDate to today
+    // E1: save an issued part — partOrder must exist and be FULFILLED; service sets issuedDate to today
     public Object save(UUID partOrderId, IssuedPart entity) {
         var partOrderOpt = partOrderRepository.findById(partOrderId);
         if (partOrderOpt.isEmpty()) {
@@ -31,15 +33,17 @@ public class IssuedPartService {
         return new Result(201, "Issued part saved successfully");
     }
 
+    // E1 (CRUD): get all issued parts
     public List<IssuedPart> getAll() { return issuedPartRepository.findAll(); }
 
+    // E1 (CRUD): get issued part by id
     public Object getById(UUID id) {
         return issuedPartRepository.findById(id)
                 .map(ip -> (Object) ip)
                 .orElse("The issued part with that id does not exist");
     }
 
-    // E2: issued part history for a customer by customerCode, newest first
+    // E2: issued part history for a customer by customerCode, newest issuedDate first
     public List<IssuedPart> getByCustomerCode(String customerCode) {
         return issuedPartRepository.findByCustomerCode(customerCode);
     }

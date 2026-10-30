@@ -1,10 +1,12 @@
 package com.carspareparts.system.repository;
 
-import com.carspareparts.system.domain.VehicleMake;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.carspareparts.system.domain.VehicleMake;
 
 public interface VehicleMakeRepository extends JpaRepository<VehicleMake, UUID> {
 

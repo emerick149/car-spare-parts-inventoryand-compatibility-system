@@ -1,11 +1,13 @@
 package com.carspareparts.system.repository;
 
-import com.carspareparts.system.domain.StoreSection;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import com.carspareparts.system.domain.StoreSection;
 
 public interface StoreSectionRepository extends JpaRepository<StoreSection, UUID> {
 
@@ -15,4 +17,8 @@ public interface StoreSectionRepository extends JpaRepository<StoreSection, UUID
 
     // D4: find a store section by sectionNumber
     Optional<StoreSection> findBySectionNumber(int sectionNumber);
+
+    // Bonus (Dashboard): count of free store sections, reusing C2 logic
+    @Query("SELECT COUNT(ss) FROM StoreSection ss WHERE NOT EXISTS (SELECT sk FROM Storekeeper sk WHERE sk.storeSection = ss)")
+    long countFreeSections();
 }

@@ -2,6 +2,8 @@ package com.carspareparts.system.repository;
 
 import com.carspareparts.system.domain.PartOrder;
 import com.carspareparts.system.domain.PartOrderStatus;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +33,13 @@ public interface PartOrderRepository extends JpaRepository<PartOrder, UUID> {
            "AND po.orderDate = :date " +
            "AND po.status <> com.carspareparts.system.domain.PartOrderStatus.FULFILLED")
     int cancelDayOrders(@Param("storekeeperID") UUID storekeeperID, @Param("date") LocalDate date);
+
+    // Dashboard: orders placed today
+    long countByOrderDate(LocalDate orderDate);
+
+    // Dashboard: orders currently in PLACED status
+    long countByStatus(PartOrderStatus status);
+
+    // Bonus pagination
+    Page<PartOrder> findAll(Pageable pageable);
 }

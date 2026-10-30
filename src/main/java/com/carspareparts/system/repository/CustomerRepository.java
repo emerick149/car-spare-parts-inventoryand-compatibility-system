@@ -1,11 +1,13 @@
 package com.carspareparts.system.repository;
 
-import com.carspareparts.system.domain.Customer;
+import java.util.List;
+import java.util.UUID;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import java.util.List;
-import java.util.UUID;
+
+import com.carspareparts.system.domain.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 

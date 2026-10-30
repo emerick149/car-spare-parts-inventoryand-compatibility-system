@@ -1,12 +1,14 @@
 package com.carspareparts.system.repository;
 
-import com.carspareparts.system.domain.Storekeeper;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.carspareparts.system.domain.Storekeeper;
 
 public interface StorekeeperRepository extends JpaRepository<Storekeeper, UUID> {
 
@@ -18,6 +20,6 @@ public interface StorekeeperRepository extends JpaRepository<Storekeeper, UUID> 
     @Query("SELECT COUNT(po) > 0 FROM PartOrder po WHERE po.storekeeper.id = :storekeeperID AND po.orderDate = :orderDate AND po.status <> com.carspareparts.system.domain.PartOrderStatus.VOIDED")
     boolean hasNonVoidedOrderOnDate(@Param("storekeeperID") UUID storekeeperID, @Param("orderDate") LocalDate orderDate);
 
-    // D4: find a storekeeper currently assigned to a store section
+    // D4: check if a store section is already occupied by another storekeeper
     boolean existsByStoreSection_SectionNumber(int sectionNumber);
 }
