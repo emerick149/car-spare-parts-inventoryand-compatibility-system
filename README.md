@@ -35,4 +35,8 @@ Before running this project, ensure you have the following installed:
    ```properties
    spring.datasource.url=jdbc:postgresql://localhost:5432/car_spare_parts_db
    spring.datasource.username=postgres
+<<<<<<< HEAD
    spring.datasource.password=arsenal32
+=======
+   spring.datasource.password=arsenal32
+>>>>>>> ce5f825ccbba070249b9dce39e6833d979b10bad
